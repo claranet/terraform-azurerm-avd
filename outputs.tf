@@ -13,7 +13,7 @@ output "name" {
   value       = azurerm_virtual_desktop_workspace.avd.name
 }
 
-output "identity_principal_id" {
-  description = "Azure Virtual Desktop system identity principal ID"
-  value       = try(azurerm_virtual_desktop_workspace.avd.identity[0].principal_id, null)
-}
+# output "identity_principal_id" {
+#   description = "Azure Virtual Desktop system identity principal ID"
+#   value       = try(azurerm_virtual_desktop_workspace.avd.identity[0].principal_id, null)
+# }
