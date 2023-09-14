@@ -1,16 +1,16 @@
-output "avd" {
-  description = "Azure Virtual Desktop output object"
-  value       = azurerm_virtual_desktop_workspace.avd
+output "workspace" {
+  description = "Azure Virtual Desktop Workspace output object"
+  value       = azurerm_virtual_desktop_workspace.workspace
 }
 
-output "id" {
-  description = "Azure Virtual Desktop ID"
-  value       = azurerm_virtual_desktop_workspace.avd.id
+output "workspace_id" {
+  description = "Azure Virtual Desktop Workspace ID"
+  value       = azurerm_virtual_desktop_workspace.workspace.id
 }
 
-output "name" {
-  description = "Azure Virtual Desktop name"
-  value       = azurerm_virtual_desktop_workspace.avd.name
+output "workspace_name" {
+  description = "Azure Virtual Desktop Workspace name"
+  value       = azurerm_virtual_desktop_workspace.workspace.name
 }
 
 # output "identity_principal_id" {
