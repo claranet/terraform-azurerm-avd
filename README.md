@@ -103,6 +103,7 @@ module "avd" {
 |------|------|
 | [azurerm_virtual_desktop_application_group.app_group](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_application_group) | resource |
 | [azurerm_virtual_desktop_host_pool.host_pool](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_host_pool) | resource |
+| [azurerm_virtual_desktop_host_pool_registration_info.registration_info](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_host_pool_registration_info) | resource |
 | [azurerm_virtual_desktop_workspace.workspace](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_workspace) | resource |
 | [azurerm_virtual_desktop_workspace_application_group_association.ws_appgroup](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_workspace_application_group_association) | resource |
 | [azurecaf_name.avd_app_group](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/data-sources/name) | data source |
@@ -120,7 +121,7 @@ module "avd" {
 | default\_tags\_enabled | Option to enable or disable default tags. | `bool` | `true` | no |
 | environment | Project environment. | `string` | n/a | yes |
 | extra\_tags | Additional tags to add on resources. | `map(string)` | `{}` | no |
-| hostpool\_config | AVD Host Pool specific configuration. | <pre>object({<br>    friendly_name            = optional(string)<br>    description              = optional(string)<br>    validate_environment     = optional(bool, true)<br>    custom_rdp_properties    = optional(string, "drivestoredirect:s:*;audiomode:i:0;videoplaybackmode:i:1;redirectclipboard:i:1;redirectprinters:i:1;devicestoredirect:s:*;redirectcomports:i:1;redirectsmartcards:i:1;usbdevicestoredirect:s:*;enablecredsspsupport:i:1;use multimon:i:1;")<br>    type                     = optional(string, "Pooled")<br>    maximum_sessions_allowed = optional(number, 16)<br>    load_balancer_type       = optional(string, "DepthFirst")<br>  })</pre> | `{}` | no |
+| hostpool\_config | AVD Host Pool specific configuration. | <pre>object({<br>    friendly_name                = optional(string)<br>    description                  = optional(string)<br>    validate_environment         = optional(bool, true)<br>    custom_rdp_properties        = optional(string, "drivestoredirect:s:*;audiomode:i:0;videoplaybackmode:i:1;redirectclipboard:i:1;redirectprinters:i:1;devicestoredirect:s:*;redirectcomports:i:1;redirectsmartcards:i:1;usbdevicestoredirect:s:*;enablecredsspsupport:i:1;use multimon:i:1;")<br>    type                         = optional(string, "Pooled")<br>    maximum_sessions_allowed     = optional(number, 16)<br>    load_balancer_type           = optional(string, "DepthFirst")<br>    host_registration_enabled    = optional(bool, false)<br>    registration_expiration_date = optional(string)<br>  })</pre> | `{}` | no |
 | hostpool\_custom\_name | Custom Azure Virtual Desktop host pool name, generated if not set | `string` | `""` | no |
 | location | Azure region to use. | `string` | n/a | yes |
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
@@ -138,9 +139,14 @@ module "avd" {
 
 | Name | Description |
 |------|-------------|
-| workspace | Azure Virtual Desktop Workspace output object |
-| workspace\_id | Azure Virtual Desktop Workspace ID |
-| workspace\_name | Azure Virtual Desktop Workspace name |
+| host\_pool | AVD Host Pool output object. |
+| host\_pool\_id | AVD Host Pool ID. |
+| host\_pool\_name | AVD Host Pool name. |
+| host\_registration\_token | AVD host registration token. |
+| host\_registration\_token\_expiration\_date | AVD host registration token expiration date. |
+| workspace | AVD Workspace output object. |
+| workspace\_id | AVD Workspace ID. |
+| workspace\_name | AVD Workspace name. |
 <!-- END_TF_DOCS -->
 
 ## Related documentation

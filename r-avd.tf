@@ -27,6 +27,13 @@ resource "azurerm_virtual_desktop_host_pool" "host_pool" {
   load_balancer_type       = var.hostpool_config.load_balancer_type # [BreadthFirst DepthFirst]
 }
 
+resource "azurerm_virtual_desktop_host_pool_registration_info" "registration_info" {
+  count = var.hostpool_config.host_registration_enabled ? 1 : 0
+
+  hostpool_id     = azurerm_virtual_desktop_host_pool.host_pool.id
+  expiration_date = var.hostpool_config.registration_expiration_date
+}
+
 resource "azurerm_virtual_desktop_application_group" "app_group" {
   location            = var.location
   resource_group_name = var.resource_group_name
