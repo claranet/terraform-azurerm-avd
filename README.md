@@ -93,25 +93,36 @@ module "avd" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| diagnostics | claranet/diagnostic-settings/azurerm | ~> 6.5.0 |
+| diagnostics\_app\_group | claranet/diagnostic-settings/azurerm | ~> 6.5.0 |
+| diagnostics\_hostpool | claranet/diagnostic-settings/azurerm | ~> 6.5.0 |
+| diagnostics\_workspace | claranet/diagnostic-settings/azurerm | ~> 6.5.0 |
 
 ## Resources
 
 | Name | Type |
 |------|------|
-| [azurerm_virtual_desktop_workspace.avd](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_workspace) | resource |
-| [azurecaf_name.avd](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/data-sources/name) | data source |
+| [azurerm_virtual_desktop_application_group.app_group](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_application_group) | resource |
+| [azurerm_virtual_desktop_host_pool.host_pool](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_host_pool) | resource |
+| [azurerm_virtual_desktop_host_pool_registration_info.registration_info](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_host_pool_registration_info) | resource |
+| [azurerm_virtual_desktop_workspace.workspace](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_workspace) | resource |
+| [azurerm_virtual_desktop_workspace_application_group_association.ws_appgroup](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_workspace_application_group_association) | resource |
+| [azurecaf_name.avd_app_group](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/data-sources/name) | data source |
+| [azurecaf_name.avd_hostpool](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/data-sources/name) | data source |
+| [azurecaf_name.avd_workspace](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/data-sources/name) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| application\_group\_config | AVD Application Group specific configuration. | <pre>object({<br>    friendly_name = optional(string)<br>    description   = optional(string)<br>    type          = optional(string, "Desktop")<br>  })</pre> | `{}` | no |
+| application\_group\_custom\_name | Custom Azure Virtual Desktop Application Group name, generated if not set | `string` | `""` | no |
 | client\_name | Client name/account used in naming. | `string` | n/a | yes |
 | custom\_diagnostic\_settings\_name | Custom name of the diagnostics settings, name will be 'default' if not set. | `string` | `"default"` | no |
-| custom\_name | Custom Azure Virtual Desktop, generated if not set | `string` | `""` | no |
 | default\_tags\_enabled | Option to enable or disable default tags. | `bool` | `true` | no |
 | environment | Project environment. | `string` | n/a | yes |
 | extra\_tags | Additional tags to add on resources. | `map(string)` | `{}` | no |
+| hostpool\_config | AVD Host Pool specific configuration. | <pre>object({<br>    friendly_name                = optional(string)<br>    description                  = optional(string)<br>    validate_environment         = optional(bool, true)<br>    custom_rdp_properties        = optional(string, "drivestoredirect:s:*;audiomode:i:0;videoplaybackmode:i:1;redirectclipboard:i:1;redirectprinters:i:1;devicestoredirect:s:*;redirectcomports:i:1;redirectsmartcards:i:1;usbdevicestoredirect:s:*;enablecredsspsupport:i:1;use multimon:i:1;")<br>    type                         = optional(string, "Pooled")<br>    maximum_sessions_allowed     = optional(number, 16)<br>    load_balancer_type           = optional(string, "DepthFirst")<br>    host_registration_enabled    = optional(bool, false)<br>    registration_expiration_date = optional(string)<br>  })</pre> | `{}` | no |
+| hostpool\_custom\_name | Custom Azure Virtual Desktop host pool name, generated if not set | `string` | `""` | no |
 | location | Azure region to use. | `string` | n/a | yes |
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
 | logs\_categories | Log categories to send to destinations. | `list(string)` | `null` | no |
@@ -121,14 +132,21 @@ module "avd" {
 | name\_suffix | Optional suffix for the generated name | `string` | `""` | no |
 | resource\_group\_name | Name of the resource group. | `string` | n/a | yes |
 | stack | Project stack name. | `string` | n/a | yes |
+| workspace\_config | AVD Workspace specific configuration. | <pre>object({<br>    friendly_name = optional(string)<br>    description   = optional(string)<br>  })</pre> | `{}` | no |
+| workspace\_custom\_name | Custom Azure Virtual Desktop workspace name, generated if not set | `string` | `""` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| avd | Azure Virtual Desktop output object |
-| id | Azure Virtual Desktop ID |
-| name | Azure Virtual Desktop name |
+| host\_pool | AVD Host Pool output object. |
+| host\_pool\_id | AVD Host Pool ID. |
+| host\_pool\_name | AVD Host Pool name. |
+| host\_registration\_token | AVD host registration token. |
+| host\_registration\_token\_expiration\_date | AVD host registration token expiration date. |
+| workspace | AVD Workspace output object. |
+| workspace\_id | AVD Workspace ID. |
+| workspace\_name | AVD Workspace name. |
 <!-- END_TF_DOCS -->
 
 ## Related documentation

@@ -12,8 +12,20 @@ variable "name_suffix" {
 }
 
 # Custom naming override
-variable "custom_name" {
-  description = "Custom Azure Virtual Desktop, generated if not set"
+variable "workspace_custom_name" {
+  description = "Custom Azure Virtual Desktop workspace name, generated if not set"
+  type        = string
+  default     = ""
+}
+
+variable "hostpool_custom_name" {
+  description = "Custom Azure Virtual Desktop host pool name, generated if not set"
+  type        = string
+  default     = ""
+}
+
+variable "application_group_custom_name" {
+  description = "Custom Azure Virtual Desktop Application Group name, generated if not set"
   type        = string
   default     = ""
 }
