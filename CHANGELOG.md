@@ -1,7 +1,7 @@
 # Unrelease
 
 Added
-  * AZ-1299: Add application_group.id output
+  * AZ-1299: Add `application_group_id` output
 
 # v7.0.0 - 2023-10-06
 
