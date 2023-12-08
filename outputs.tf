@@ -38,3 +38,8 @@ output "host_registration_token_expiration_date" {
   description = "AVD host registration token expiration date."
   value       = one(azurerm_virtual_desktop_host_pool_registration_info.registration_info[*].expiration_date)
 }
+
+output "application_group_id" {
+  description = "AVD Application Group ID"
+  value       = azurerm_virtual_desktop_application_group.app_group.id
+}

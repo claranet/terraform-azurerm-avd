@@ -139,6 +139,7 @@ module "avd" {
 
 | Name | Description |
 |------|-------------|
+| application\_group\_id | AVD Application Group ID |
 | host\_pool | AVD Host Pool output object. |
 | host\_pool\_id | AVD Host Pool ID. |
 | host\_pool\_name | AVD Host Pool name. |
