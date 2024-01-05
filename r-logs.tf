@@ -13,7 +13,7 @@ module "diagnostics_workspace" {
   name_suffix = var.name_suffix
 }
 
-module "diagnostics_hostpool" {
+module "diagnostics_host_pool" {
   source  = "claranet/diagnostic-settings/azurerm"
   version = "~> 6.5.0"
 
@@ -33,6 +33,23 @@ module "diagnostics_app_group" {
   version = "~> 6.5.0"
 
   resource_id = azurerm_virtual_desktop_application_group.app_group.id
+
+  logs_destinations_ids = var.logs_destinations_ids
+  log_categories        = var.logs_categories
+  metric_categories     = var.logs_metrics_categories
+
+  custom_name = var.custom_diagnostic_settings_name
+  name_prefix = var.name_prefix
+  name_suffix = var.name_suffix
+}
+
+module "diagnostics_scaling_plan" {
+  source  = "claranet/diagnostic-settings/azurerm"
+  version = "~> 6.5.0"
+
+  count = var.scaling_plan_config.enabled ? 1 : 0
+
+  resource_id = one(azurerm_virtual_desktop_scaling_plan.scaling_plan[*].id)
 
   logs_destinations_ids = var.logs_destinations_ids
   log_categories        = var.logs_categories

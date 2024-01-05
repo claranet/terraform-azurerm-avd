@@ -1,6 +1,3 @@
 locals {
-  avd_workspace = {
-    friendly_name = coalesce(var.workspace_config.friendly_name, format("%s AVD Worskpace", var.client_name))
-    description   = coalesce(var.workspace_config.description, format("%s AVD Worskpace", var.client_name))
-  }
+  resource_group_id = format("/subscriptions/%s/resourceGroups/%s", data.azurerm_client_config.current.subscription_id, var.resource_group_name)
 }

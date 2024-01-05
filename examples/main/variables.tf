@@ -1,5 +1,5 @@
 variable "azure_region" {
-  description = "Azure region to use."
+  description = "Azure Region to use."
   type        = string
 }
 
@@ -14,6 +14,6 @@ variable "environment" {
 }
 
 variable "stack" {
-  description = "Project stack name."
+  description = "Project Stack name."
   type        = string
 }
