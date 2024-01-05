@@ -5,7 +5,7 @@ resource "azurerm_virtual_desktop_workspace" "workspace" {
   resource_group_name = var.resource_group_name
 
   friendly_name = coalesce(var.workspace_config.friendly_name, local.avd_workspace_name)
-  description   = coalesce(var.workspace_config.description, "${var.client_name} Azure Virtual Desktop Worskpace.")
+  description   = coalesce(var.workspace_config.description, "${title(var.client_name)} Azure Virtual Desktop Workspace.")
 
   public_network_access_enabled = var.workspace_config.public_network_access_enabled
 
