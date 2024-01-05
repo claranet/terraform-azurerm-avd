@@ -1,4 +1,4 @@
-# Unreleased
+# v7.2.0 - 2024-01-05
 
 Added
   * AZ-1310: Add an optional Scaling Plan for the Host Pool (with a dedicated Role Definition)
