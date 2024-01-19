@@ -1,4 +1,4 @@
-# Unreleased
+# v7.1.1 - 2024-01-19
 
 Fixed
   * [GH-1](https://github.com/claranet/terraform-azurerm-avd/issues/1): Fix `coalesce` function
