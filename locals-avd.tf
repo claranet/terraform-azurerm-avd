@@ -1,7 +1,7 @@
 locals {
   # https://learn.microsoft.com/en-us/azure/virtual-desktop/service-principal-assign-roles?tabs=portal
   avd_service_principal_client_id = "9cdead84-a844-4324-93f2-b2e6bb768d07"
-  avd_service_principal_object_id = coalesce(var.scaling_plan_config.role_assignment.principal_id, one(data.azuread_service_principal.avd_service_principal[*].object_id))
+  avd_service_principal_object_id = try(coalesce(var.scaling_plan_config.role_assignment.principal_id, one(data.azuread_service_principal.avd_service_principal[*].object_id)), null)
 
   scaling_plan_role_assignment_enabled = var.scaling_plan_config.enabled && var.scaling_plan_config.role_assignment.enabled
 
