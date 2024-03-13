@@ -95,8 +95,8 @@ variable "scaling_plan_config" {
       ramp_down_wait_time_minutes          = optional(number, 45)
     })), [])
     role_assignment = optional(object({
-      enabled      = optional(bool, true)
-      principal_id = optional(string)
+      enabled   = optional(bool, true)
+      object_id = optional(string)
     }), {})
     extra_tags = optional(map(string))
   })
