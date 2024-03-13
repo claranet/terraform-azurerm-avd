@@ -59,6 +59,7 @@ variable "application_group_config" {
     default_desktop_display_name = optional(string)
     description                  = optional(string)
     type                         = optional(string, "Desktop")
+    role_assignments_object_ids  = optional(list(string), [])
     extra_tags                   = optional(map(string))
   })
   default  = {}

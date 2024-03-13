@@ -157,6 +157,7 @@ module "avd" {
 
 | Name | Type |
 |------|------|
+| [azurerm_role_assignment.app_group_role_assignments](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.scaling_role_assignment](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_role_definition.scaling_role_definition](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_definition) | resource |
 | [azurerm_virtual_desktop_application_group.app_group](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_application_group) | resource |
@@ -177,7 +178,7 @@ module "avd" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| application\_group\_config | AVD Application Group specific configuration. | <pre>object({<br>    friendly_name                = optional(string)<br>    default_desktop_display_name = optional(string)<br>    description                  = optional(string)<br>    type                         = optional(string, "Desktop")<br>    extra_tags                   = optional(map(string))<br>  })</pre> | `{}` | no |
+| application\_group\_config | AVD Application Group specific configuration. | <pre>object({<br>    friendly_name                = optional(string)<br>    default_desktop_display_name = optional(string)<br>    description                  = optional(string)<br>    type                         = optional(string, "Desktop")<br>    role_assignments_object_ids  = optional(list(string), [])<br>    extra_tags                   = optional(map(string))<br>  })</pre> | `{}` | no |
 | application\_group\_custom\_name | Custom Azure Virtual Desktop Application Group name, generated if not set. | `string` | `""` | no |
 | client\_name | Client name/account used in naming. | `string` | n/a | yes |
 | custom\_diagnostic\_settings\_name | Custom name of the diagnostics settings, name will be 'default' if not set. | `string` | `"default"` | no |

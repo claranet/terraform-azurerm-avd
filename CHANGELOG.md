@@ -1,5 +1,8 @@
 # Unreleased
 
+Added
+  * AZ-1310: Add `Desktop Virtualization User` Role Assignments to Application Group
+
 Changed
   * AZ-1310: Update default `validate_environment` of Host Pool resource (`true` => `false`)
   * AZ-1310: Update default `load_balancer_type` of Host Pool resource (`DepthFirst` => `BreadthFirst`)

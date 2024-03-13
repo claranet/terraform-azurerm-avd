@@ -15,6 +15,14 @@ resource "azurerm_virtual_desktop_application_group" "app_group" {
   tags = merge(local.default_tags, var.application_group_config.extra_tags, var.extra_tags)
 }
 
+resource "azurerm_role_assignment" "app_group_role_assignments" {
+  for_each = toset(var.application_group_config.role_assignments_object_ids)
+
+  scope                = azurerm_virtual_desktop_application_group.app_group.id
+  principal_id         = each.key
+  role_definition_name = "Desktop Virtualization User"
+}
+
 resource "azurerm_virtual_desktop_workspace_application_group_association" "workspace_app_group_association" {
   workspace_id         = azurerm_virtual_desktop_workspace.workspace.id
   application_group_id = azurerm_virtual_desktop_application_group.app_group.id
