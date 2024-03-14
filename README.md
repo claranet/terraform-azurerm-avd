@@ -61,6 +61,20 @@ module "run" {
   resource_group_name = module.rg.resource_group_name
 }
 
+locals {
+  timezone = "Romance Standard Time"
+
+  # Entra ID
+  avd_group_display_name = "AVD Users"
+  avd_user_01_object_id  = "axxxxxxx-axxx-axxx-axxx-axxxxxxxxxxx"
+  avd_user_02_object_id  = "bxxxxxxx-bxxx-bxxx-bxxx-bxxxxxxxxxxx"
+}
+
+data "azuread_group" "avd_group" {
+  display_name     = local.avd_group_display_name
+  security_enabled = true
+}
+
 module "avd" {
   source  = "claranet/avd/azurerm"
   version = "x.x.x"
@@ -74,18 +88,17 @@ module "avd" {
   resource_group_name = module.rg.resource_group_name
 
   workspace_config = {
-    public_network_access_enabled = false
     extra_tags = {
       foo = "bar"
     }
   }
 
   host_pool_config = {
-    # Value will automatically change depending on the Scaling Plan settings
-    load_balancer_type = "BreadthFirst"
-
+    load_balancer_type       = "DepthFirst" # Value will automatically change depending on the Scaling Plan settings
+    maximum_sessions_allowed = 24
     scheduled_agent_updates = {
-      enabled = true
+      enabled  = true
+      timezone = local.timezone
       schedules = [
         {
           day_of_week = "Sunday"
@@ -100,28 +113,40 @@ module "avd" {
   }
 
   application_group_config = {
-    type = "RemoteApp"
+    role_assignments_object_ids = concat(
+      data.azuread_group.avd_group.members,
+      [
+        local.avd_user_01_object_id,
+        local.avd_user_02_object_id,
+      ],
+    )
   }
 
   scaling_plan_config = {
-    enabled = true
-
+    enabled  = true
+    timezone = local.timezone
+    schedules = [
+      {
+        name                 = "weekdays"
+        days_of_week         = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+        ramp_up_start_time   = "08:00"
+        peak_start_time      = "09:00"
+        ramp_down_start_time = "19:00"
+        off_peak_start_time  = "22:00"
+      },
+      {
+        name                 = "weekend"
+        days_of_week         = ["Saturday", "Sunday"]
+        ramp_up_start_time   = "09:00"
+        peak_start_time      = "10:00"
+        ramp_down_start_time = "17:00"
+        off_peak_start_time  = "20:00"
+      },
+    ]
     # role_assignment = {
-    #   # `false` if you do not have permission to create the Role and the Role Assignment, but this must be done somehow
-    #   enabled = false
-    #
-    #   # In case you do not have permsision to retrieve the object ID of the AVD Service Principal
-    #   principal_id = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeeee"
+    #   enabled   = false                                   # `false` if you do not have permission to create the Role and the Role Assignment, but this must be done somehow
+    #   object_id = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeeee" # In case you do not have permsision to retrieve the object ID of the AVD Service Principal
     # }
-
-    schedules = [{
-      name                 = "weekdays"
-      days_of_week         = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
-      peak_start_time      = "09:00"
-      off_peak_start_time  = "22:00"
-      ramp_up_start_time   = "08:00"
-      ramp_down_start_time = "19:00"
-    }]
   }
 
   logs_destinations_ids = [
