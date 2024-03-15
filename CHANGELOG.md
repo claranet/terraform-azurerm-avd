@@ -1,3 +1,9 @@
+# Unreleased
+
+Changed
+  * AZ-1310: Update default `validate_environment` of Host Pool resource (`true` => `false`)
+  * AZ-1310: Update default `load_balancer_type` of Host Pool resource (`DepthFirst` => `BreadthFirst`)
+
 # v7.2.1 - 2024-01-19
 
 Fixed
