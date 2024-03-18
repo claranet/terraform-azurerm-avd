@@ -1,4 +1,4 @@
-# Unreleased
+# v7.3.0 - 2024-03-18
 
 Added
   * AZ-1310: Add `Desktop Virtualization User` Role Assignments to Application Group
