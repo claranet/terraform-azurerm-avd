@@ -61,6 +61,20 @@ module "run" {
   resource_group_name = module.rg.resource_group_name
 }
 
+locals {
+  timezone = "Romance Standard Time"
+
+  # Entra ID
+  avd_group_display_name = "AVD Users"
+  avd_user_01_object_id  = "axxxxxxx-axxx-axxx-axxx-axxxxxxxxxxx"
+  avd_user_02_object_id  = "bxxxxxxx-bxxx-bxxx-bxxx-bxxxxxxxxxxx"
+}
+
+data "azuread_group" "avd_group" {
+  display_name     = local.avd_group_display_name
+  security_enabled = true
+}
+
 module "avd" {
   source  = "claranet/avd/azurerm"
   version = "x.x.x"
@@ -74,18 +88,17 @@ module "avd" {
   resource_group_name = module.rg.resource_group_name
 
   workspace_config = {
-    public_network_access_enabled = false
     extra_tags = {
       foo = "bar"
     }
   }
 
   host_pool_config = {
-    # Value will automatically change depending on the Scaling Plan settings
-    load_balancer_type = "BreadthFirst"
-
+    load_balancer_type       = "DepthFirst" # Value will automatically change depending on the Scaling Plan settings
+    maximum_sessions_allowed = 24
     scheduled_agent_updates = {
-      enabled = true
+      enabled  = true
+      timezone = local.timezone
       schedules = [
         {
           day_of_week = "Sunday"
@@ -100,28 +113,40 @@ module "avd" {
   }
 
   application_group_config = {
-    type = "RemoteApp"
+    role_assignments_object_ids = concat(
+      data.azuread_group.avd_group.members,
+      [
+        local.avd_user_01_object_id,
+        local.avd_user_02_object_id,
+      ],
+    )
   }
 
   scaling_plan_config = {
-    enabled = true
-
+    enabled  = true
+    timezone = local.timezone
+    schedules = [
+      {
+        name                 = "weekdays"
+        days_of_week         = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+        ramp_up_start_time   = "08:00"
+        peak_start_time      = "09:00"
+        ramp_down_start_time = "19:00"
+        off_peak_start_time  = "22:00"
+      },
+      {
+        name                 = "weekend"
+        days_of_week         = ["Saturday", "Sunday"]
+        ramp_up_start_time   = "09:00"
+        peak_start_time      = "10:00"
+        ramp_down_start_time = "17:00"
+        off_peak_start_time  = "20:00"
+      },
+    ]
     # role_assignment = {
-    #   # `false` if you do not have permission to create the Role and the Role Assignment, but this must be done somehow
-    #   enabled = false
-    #
-    #   # In case you do not have permsision to retrieve the object ID of the AVD Service Principal
-    #   principal_id = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeeee"
+    #   enabled   = false                                   # `false` if you do not have permission to create the Role and the Role Assignment, but this must be done somehow
+    #   object_id = "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeeee" # In case you do not have permsision to retrieve the object ID of the AVD Service Principal
     # }
-
-    schedules = [{
-      name                 = "weekdays"
-      days_of_week         = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
-      peak_start_time      = "09:00"
-      off_peak_start_time  = "22:00"
-      ramp_up_start_time   = "08:00"
-      ramp_down_start_time = "19:00"
-    }]
   }
 
   logs_destinations_ids = [
@@ -167,6 +192,7 @@ module "avd" {
 | [azurerm_virtual_desktop_workspace.workspace](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_workspace) | resource |
 | [azurerm_virtual_desktop_workspace_application_group_association.workspace_app_group_association](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_workspace_application_group_association) | resource |
 | [time_rotating.time](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/rotating) | resource |
+| [azuread_application_published_app_ids.well_known](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/application_published_app_ids) | data source |
 | [azuread_service_principal.avd_service_principal](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/service_principal) | data source |
 | [azurecaf_name.avd_app_group](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/data-sources/name) | data source |
 | [azurecaf_name.avd_host_pool](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/data-sources/name) | data source |
@@ -195,7 +221,7 @@ module "avd" {
 | name\_prefix | Optional prefix for the generated name. | `string` | `""` | no |
 | name\_suffix | Optional suffix for the generated name. | `string` | `""` | no |
 | resource\_group\_name | Name of the resource group. | `string` | n/a | yes |
-| scaling\_plan\_config | AVD Scaling Plan specific configuration. | <pre>object({<br>    enabled       = optional(bool, false)<br>    friendly_name = optional(string)<br>    description   = optional(string)<br>    exclusion_tag = optional(string)<br>    timezone      = optional(string, "UTC") # https://jackstromberg.com/2017/01/list-of-time-zones-consumed-by-azure/<br>    schedules = optional(list(object({<br>      name                                 = string<br>      days_of_week                         = list(string)<br>      peak_start_time                      = string<br>      peak_load_balancing_algorithm        = optional(string, "BreadthFirst")<br>      off_peak_start_time                  = string<br>      off_peak_load_balancing_algorithm    = optional(string, "DepthFirst")<br>      ramp_up_start_time                   = string<br>      ramp_up_load_balancing_algorithm     = optional(string, "BreadthFirst")<br>      ramp_up_capacity_threshold_percent   = optional(number, 75)<br>      ramp_up_minimum_hosts_percent        = optional(number, 33)<br>      ramp_down_start_time                 = string<br>      ramp_down_capacity_threshold_percent = optional(number, 5)<br>      ramp_down_force_logoff_users         = optional(string, false)<br>      ramp_down_load_balancing_algorithm   = optional(string, "DepthFirst")<br>      ramp_down_minimum_hosts_percent      = optional(number, 33)<br>      ramp_down_notification_message       = optional(string, "Please log off in the next 45 minutes...")<br>      ramp_down_stop_hosts_when            = optional(string, "ZeroSessions")<br>      ramp_down_wait_time_minutes          = optional(number, 45)<br>    })), [])<br>    role_assignment = optional(object({<br>      enabled      = optional(bool, true)<br>      principal_id = optional(string)<br>    }), {})<br>    extra_tags = optional(map(string))<br>  })</pre> | `{}` | no |
+| scaling\_plan\_config | AVD Scaling Plan specific configuration. | <pre>object({<br>    enabled       = optional(bool, false)<br>    friendly_name = optional(string)<br>    description   = optional(string)<br>    exclusion_tag = optional(string)<br>    timezone      = optional(string, "UTC") # https://jackstromberg.com/2017/01/list-of-time-zones-consumed-by-azure/<br>    schedules = optional(list(object({<br>      name                                 = string<br>      days_of_week                         = list(string)<br>      peak_start_time                      = string<br>      peak_load_balancing_algorithm        = optional(string, "BreadthFirst")<br>      off_peak_start_time                  = string<br>      off_peak_load_balancing_algorithm    = optional(string, "DepthFirst")<br>      ramp_up_start_time                   = string<br>      ramp_up_load_balancing_algorithm     = optional(string, "BreadthFirst")<br>      ramp_up_capacity_threshold_percent   = optional(number, 75)<br>      ramp_up_minimum_hosts_percent        = optional(number, 33)<br>      ramp_down_start_time                 = string<br>      ramp_down_capacity_threshold_percent = optional(number, 5)<br>      ramp_down_force_logoff_users         = optional(string, false)<br>      ramp_down_load_balancing_algorithm   = optional(string, "DepthFirst")<br>      ramp_down_minimum_hosts_percent      = optional(number, 33)<br>      ramp_down_notification_message       = optional(string, "Please log off in the next 45 minutes...")<br>      ramp_down_stop_hosts_when            = optional(string, "ZeroSessions")<br>      ramp_down_wait_time_minutes          = optional(number, 45)<br>    })), [])<br>    role_assignment = optional(object({<br>      enabled   = optional(bool, true)<br>      object_id = optional(string)<br>    }), {})<br>    extra_tags = optional(map(string))<br>  })</pre> | `{}` | no |
 | scaling\_plan\_custom\_name | Custom Azure Virtual Desktop Scaling Plan name, generated if not set. | `string` | `""` | no |
 | stack | Project stack name. | `string` | n/a | yes |
 | workspace\_config | AVD Workspace specific configuration. | <pre>object({<br>    friendly_name                 = optional(string)<br>    description                   = optional(string)<br>    public_network_access_enabled = optional(bool)<br>    extra_tags                    = optional(map(string))<br>  })</pre> | `{}` | no |

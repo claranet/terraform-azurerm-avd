@@ -6,6 +6,9 @@ Added
 Changed
   * AZ-1310: Update default `validate_environment` of Host Pool resource (`true` => `false`)
   * AZ-1310: Update default `load_balancer_type` of Host Pool resource (`DepthFirst` => `BreadthFirst`)
+  * AZ-1310: Change in method of retrieving AVD Service Principal client ID
+  * AZ-1310: Change `var.scaling_plan_config.role_assignment.principal_id` to `var.scaling_plan_config.role_assignment.object_id`
+  * AZ-1310: Update example
 
 # v7.2.1 - 2024-01-19
 

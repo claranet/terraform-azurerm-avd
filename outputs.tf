@@ -86,7 +86,7 @@ output "scaling_plan_role_definition_name" {
 
 output "avd_service_principal_client_id" {
   description = "AVD Service Principal Client ID (Application ID)."
-  value       = local.avd_service_principal_client_id
+  value       = data.azuread_application_published_app_ids.well_known.result["WindowsVirtualDesktop"]
 }
 
 output "avd_service_principal_object_id" {
