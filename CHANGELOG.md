@@ -1,3 +1,22 @@
+## [7.3.1](https://git.fr.clara.net/claranet/projects/cloud/azure/terraform/modules/avd/compare/v7.3.0...v7.3.1) (2024-04-12)
+
+
+### Continuous Integration
+
+* **AZ-1391:** enable release job ([ecc8d31](https://git.fr.clara.net/claranet/projects/cloud/azure/terraform/modules/avd/commit/ecc8d31915d0d1e949fc7194664dc41d683ff658))
+* fix workflow ([f8f94b9](https://git.fr.clara.net/claranet/projects/cloud/azure/terraform/modules/avd/commit/f8f94b91379ab2086716717782c8c8dd14b49eda))
+* **release:** add revert type to semantic-release config ([4c51080](https://git.fr.clara.net/claranet/projects/cloud/azure/terraform/modules/avd/commit/4c51080737e3c66c1a288a04395943407ea216d5))
+
+
+### Miscellaneous Chores
+
+* **deps:** update renovate.json ([af435eb](https://git.fr.clara.net/claranet/projects/cloud/azure/terraform/modules/avd/commit/af435eb294612d9625f411b2005c986aa12d02ea))
+
+
+### Revert
+
+* **AZ-1310:** revert `validate_environment` value for host pool resource ([be043f4](https://git.fr.clara.net/claranet/projects/cloud/azure/terraform/modules/avd/commit/be043f45aeb77b18cd06f403626402a4cd208991))
+
 # v7.3.0 - 2024-03-18
 
 Added
