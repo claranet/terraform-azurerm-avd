@@ -25,6 +25,10 @@
           {
             "type": "style",
             "release": "patch"
+          },
+          {
+            "type": "revert",
+            "release": "patch"
           }
         ],
         "parserOpts": {
@@ -92,6 +96,11 @@
             {
               "type": "chore",
               "section": "Miscellaneous Chores",
+              "hidden": false
+            },
+            {
+              "type": "revert",
+              "section": "Revert",
               "hidden": false
             }
           ]
