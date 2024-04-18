@@ -1,3 +1,15 @@
+## 7.3.2 (2024-04-18)
+
+
+### Documentation
+
+* update CHANGELOG links 67ca37f
+
+
+### Continuous Integration
+
+* **AZ-1391:** enable semantic-release [skip ci] dd222ec
+
 ## [7.3.1](https://github.com/claranet/terraform-azurerm-avd/compare/v7.3.0...v7.3.1) (2024-04-12)
 
 
