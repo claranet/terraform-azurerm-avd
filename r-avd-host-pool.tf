@@ -10,6 +10,8 @@ resource "azurerm_virtual_desktop_host_pool" "host_pool" {
   validate_environment  = var.host_pool_config.validate_environment
   custom_rdp_properties = var.host_pool_config.custom_rdp_properties
 
+  public_network_access = var.host_pool_config.public_network_access
+
   type                             = var.host_pool_config.type
   load_balancer_type               = var.host_pool_config.type == "Personal" ? "Persistent" : var.host_pool_config.load_balancer_type
   personal_desktop_assignment_type = var.host_pool_config.type == "Personal" ? var.host_pool_config.personal_desktop_assignment_type : null
