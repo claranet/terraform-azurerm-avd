@@ -1,3 +1,35 @@
+## 7.4.0 (2024-05-31)
+
+
+### Features
+
+* **AZ-1414:** add `public_network_access` parameter to host pool 290dfec
+
+
+### Continuous Integration
+
+* **AZ-1391:** update semantic-release config [skip ci] 4727247
+
+
+### Miscellaneous Chores
+
+* **deps:** enable automerge on renovate 2aef1e8
+* **deps:** update dependency opentofu to v1.7.0 631a5de
+* **deps:** update dependency opentofu to v1.7.1 146ec3b
+* **deps:** update dependency pre-commit to v3.7.1 877fed8
+* **deps:** update dependency terraform-docs to v0.18.0 568feb1
+* **deps:** update dependency tflint to v0.51.0 c2a77c0
+* **deps:** update dependency tflint to v0.51.1 848ae1c
+* **deps:** update dependency trivy to v0.50.2 9c97865
+* **deps:** update dependency trivy to v0.50.4 597b1b5
+* **deps:** update dependency trivy to v0.51.0 ba7d1ff
+* **deps:** update dependency trivy to v0.51.1 ff1b89f
+* **deps:** update dependency trivy to v0.51.2 ff6f831
+* **deps:** update dependency trivy to v0.51.3 26b649b
+* **deps:** update dependency trivy to v0.51.4 4ee0b7a
+* **pre-commit:** update commitlint hook eec0b61
+* **release:** remove legacy `VERSION` file 2c8c1e8
+
 ## 7.3.2 (2024-04-18)
 
 
