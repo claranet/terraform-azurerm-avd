@@ -174,10 +174,10 @@ module "avd" {
 
 | Name | Version |
 |------|---------|
-| azuread | >= 2.47 |
-| azurecaf | ~> 1.2.28 |
-| azurerm | ~> 3.101 |
-| time | ~> 0.12 |
+| azuread | >= 2.47 ~> 3.0 |
+| azurecaf | ~> 1.2.28 ~> 1.2.28 |
+| azurerm | ~> 4.0 ~> 3.101 |
+| time | ~> 0.12 ~> 0.12 |
 
 ## Modules
 
