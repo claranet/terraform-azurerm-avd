@@ -11,7 +11,7 @@ terraform {
       version = "~> 2.47"
     }
     azurecaf = {
-      source  = "aztfmod/azurecaf"
+      source  = "claranet/azurecaf"
       version = "~> 1.2, >= 1.2.22"
     }
     time = {
