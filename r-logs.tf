@@ -1,6 +1,6 @@
 module "diagnostics_workspace" {
   source  = "claranet/diagnostic-settings/azurerm"
-  version = "~> 7.0.0"
+  version = "~> 8.0.0"
 
   resource_id = azurerm_virtual_desktop_workspace.workspace.id
 
@@ -15,7 +15,7 @@ module "diagnostics_workspace" {
 
 module "diagnostics_host_pool" {
   source  = "claranet/diagnostic-settings/azurerm"
-  version = "~> 7.0.0"
+  version = "~> 8.0.0"
 
   resource_id = azurerm_virtual_desktop_host_pool.host_pool.id
 
@@ -30,7 +30,7 @@ module "diagnostics_host_pool" {
 
 module "diagnostics_app_group" {
   source  = "claranet/diagnostic-settings/azurerm"
-  version = "~> 7.0.0"
+  version = "~> 8.0.0"
 
   resource_id = azurerm_virtual_desktop_application_group.app_group.id
 
@@ -45,7 +45,7 @@ module "diagnostics_app_group" {
 
 module "diagnostics_scaling_plan" {
   source  = "claranet/diagnostic-settings/azurerm"
-  version = "~> 7.0.0"
+  version = "~> 8.0.0"
 
   count = var.scaling_plan_config.enabled ? 1 : 0
 

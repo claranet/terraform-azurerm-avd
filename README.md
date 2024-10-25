@@ -183,10 +183,10 @@ module "avd" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| diagnostics\_app\_group | claranet/diagnostic-settings/azurerm | ~> 7.0.0 |
-| diagnostics\_host\_pool | claranet/diagnostic-settings/azurerm | ~> 7.0.0 |
-| diagnostics\_scaling\_plan | claranet/diagnostic-settings/azurerm | ~> 7.0.0 |
-| diagnostics\_workspace | claranet/diagnostic-settings/azurerm | ~> 7.0.0 |
+| diagnostics\_app\_group | claranet/diagnostic-settings/azurerm | ~> 8.0.0 |
+| diagnostics\_host\_pool | claranet/diagnostic-settings/azurerm | ~> 8.0.0 |
+| diagnostics\_scaling\_plan | claranet/diagnostic-settings/azurerm | ~> 8.0.0 |
+| diagnostics\_workspace | claranet/diagnostic-settings/azurerm | ~> 8.0.0 |
 
 ## Resources
 
