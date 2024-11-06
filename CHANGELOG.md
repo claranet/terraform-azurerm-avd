@@ -1,3 +1,24 @@
+## 7.5.1 (2024-11-06)
+
+### Bug Fixes
+
+* **GH-4:** unlock AzureAD provider constrain e225961
+
+### Miscellaneous Chores
+
+* **deps:** update dependency claranet/diagnostic-settings/azurerm to v7 ea10f01
+* **deps:** update dependency opentofu to v1.8.3 1282c9f
+* **deps:** update dependency opentofu to v1.8.4 41d4ad4
+* **deps:** update dependency pre-commit to v4 cdd3fb5
+* **deps:** update dependency pre-commit to v4.0.1 9d15eb6
+* **deps:** update dependency trivy to v0.56.1 194caf6
+* **deps:** update dependency trivy to v0.56.2 1fff23e
+* **deps:** update pre-commit hook pre-commit/pre-commit-hooks to v5 65eb820
+* **deps:** update pre-commit hook tofuutils/pre-commit-opentofu to v2.1.0 5ff5d99
+* **deps:** update tools 5670a0b
+* prepare for new examples structure 22e7681
+* update examples structure fd7ef20
+
 ## 7.5.0 (2024-10-03)
 
 ### Features
