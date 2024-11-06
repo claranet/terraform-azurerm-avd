@@ -168,8 +168,8 @@ module "avd" {
 
 | Name | Version |
 |------|---------|
-| azuread | ~> 2.47 |
-| azurecaf | ~> 1.2, >= 1.2.22 |
+| azuread | >= 2.47 |
+| azurecaf | ~> 1.2.28 |
 | azurerm | ~> 3.101 |
 | time | ~> 0.12 |
 

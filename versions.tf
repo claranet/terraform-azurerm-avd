@@ -8,11 +8,11 @@ terraform {
     }
     azuread = {
       source  = "hashicorp/azuread"
-      version = "~> 2.47"
+      version = ">= 2.47"
     }
     azurecaf = {
       source  = "claranet/azurecaf"
-      version = "~> 1.2, >= 1.2.22"
+      version = "~> 1.2.28"
     }
     time = {
       source  = "hashicorp/time"
