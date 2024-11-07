@@ -1,4 +1,4 @@
-resource "azurerm_virtual_desktop_host_pool" "host_pool" {
+resource "azurerm_virtual_desktop_host_pool" "main" {
   name     = local.avd_host_pool_name
   location = var.location
 
@@ -36,6 +36,11 @@ resource "azurerm_virtual_desktop_host_pool" "host_pool" {
   tags = merge(local.default_tags, var.host_pool_config.extra_tags, var.extra_tags)
 }
 
+moved {
+  from = azurerm_virtual_desktop_host_pool.host_pool
+  to   = azurerm_virtual_desktop_host_pool.main
+}
+
 # `terraform/tfwrapper taint module.avd.time_rotating.time` to force recreation
 resource "time_rotating" "time" {
   rotation_hours = var.host_pool_config.host_registration_expires_in_in_hours
@@ -45,7 +50,12 @@ resource "time_rotating" "time" {
   }
 }
 
-resource "azurerm_virtual_desktop_host_pool_registration_info" "host_pool_registration_info" {
-  hostpool_id     = azurerm_virtual_desktop_host_pool.host_pool.id
+resource "azurerm_virtual_desktop_host_pool_registration_info" "main" {
+  hostpool_id     = azurerm_virtual_desktop_host_pool.main.id
   expiration_date = time_rotating.time.rotation_rfc3339
+}
+
+moved {
+  from = azurerm_virtual_desktop_host_pool_registration_info.host_pool_registration_info
+  to   = azurerm_virtual_desktop_host_pool_registration_info.main
 }
