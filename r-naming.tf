@@ -38,3 +38,13 @@ data "azurecaf_name" "avd_scaling_plan" {
   clean_input   = true
   separator     = "-"
 }
+
+data "azurecaf_name" "avd_app" {
+  name          = var.stack
+  resource_type = "azurerm_resource_group"
+  prefixes      = var.name_prefix == "" ? ["vda"] : [local.name_prefix, "vda"]
+  suffixes      = compact([var.client_name, var.location_short, var.environment, local.name_suffix])
+  use_slug      = false
+  clean_input   = true
+  separator     = "-"
+}

@@ -126,6 +126,12 @@ module "avd" {
     )
   }
 
+  applications_config = {
+    app-1 = {
+      path = "C:\\application\\app-1.exe"
+    }
+  }
+
   scaling_plan_config = {
     enabled  = true
     timezone = local.timezone
@@ -189,6 +195,7 @@ module "avd" {
 | [azurerm_role_assignment.app_group_role_assignments](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.scaling_role_assignment](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_role_definition.scaling_role_definition](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_definition) | resource |
+| [azurerm_virtual_desktop_application.app](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_application) | resource |
 | [azurerm_virtual_desktop_application_group.app_group](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_application_group) | resource |
 | [azurerm_virtual_desktop_host_pool.host_pool](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_host_pool) | resource |
 | [azurerm_virtual_desktop_host_pool_registration_info.host_pool_registration_info](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_host_pool_registration_info) | resource |
@@ -198,6 +205,7 @@ module "avd" {
 | [time_rotating.time](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/rotating) | resource |
 | [azuread_application_published_app_ids.well_known](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/application_published_app_ids) | data source |
 | [azuread_service_principal.avd_service_principal](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/service_principal) | data source |
+| [azurecaf_name.avd_app](https://registry.terraform.io/providers/claranet/azurecaf/latest/docs/data-sources/name) | data source |
 | [azurecaf_name.avd_app_group](https://registry.terraform.io/providers/claranet/azurecaf/latest/docs/data-sources/name) | data source |
 | [azurecaf_name.avd_host_pool](https://registry.terraform.io/providers/claranet/azurecaf/latest/docs/data-sources/name) | data source |
 | [azurecaf_name.avd_scaling_plan](https://registry.terraform.io/providers/claranet/azurecaf/latest/docs/data-sources/name) | data source |
@@ -210,6 +218,7 @@ module "avd" {
 |------|-------------|------|---------|:--------:|
 | application\_group\_config | AVD Application Group specific configuration. | <pre>object({<br/>    friendly_name                = optional(string)<br/>    default_desktop_display_name = optional(string)<br/>    description                  = optional(string)<br/>    type                         = optional(string, "Desktop")<br/>    role_assignments_object_ids  = optional(list(string), [])<br/>    extra_tags                   = optional(map(string))<br/>  })</pre> | `{}` | no |
 | application\_group\_custom\_name | Custom Azure Virtual Desktop Application Group name, generated if not set. | `string` | `""` | no |
+| applications\_config | AVD applications configuration. Description of parameters [here](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_application). | <pre>map(object({<br/>    custom_name                  = optional(string)<br/>    friendly_name                = optional(string)<br/>    description                  = optional(string)<br/>    path                         = string<br/>    command_line_argument_policy = optional(string, "DoNotAllow")<br/>    command_line_arguments       = optional(string)<br/>    show_in_portal               = optional(bool)<br/>    icon_path                    = optional(string)<br/>    icon_index                   = optional(string)<br/>  }))</pre> | `{}` | no |
 | client\_name | Client name/account used in naming. | `string` | n/a | yes |
 | custom\_diagnostic\_settings\_name | Custom name of the diagnostics settings, name will be 'default' if not set. | `string` | `"default"` | no |
 | default\_tags\_enabled | Option to enable or disable default tags. | `bool` | `true` | no |

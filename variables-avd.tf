@@ -67,6 +67,23 @@ variable "application_group_config" {
   nullable = false
 }
 
+variable "applications_config" {
+  description = "AVD applications configuration. Description of parameters [here](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_application)."
+  type = map(object({
+    custom_name                  = optional(string)
+    friendly_name                = optional(string)
+    description                  = optional(string)
+    path                         = string
+    command_line_argument_policy = optional(string, "DoNotAllow")
+    command_line_arguments       = optional(string)
+    show_in_portal               = optional(bool)
+    icon_path                    = optional(string)
+    icon_index                   = optional(string)
+  }))
+  default  = {}
+  nullable = false
+}
+
 variable "scaling_plan_config" {
   description = "AVD Scaling Plan specific configuration."
   type = object({
