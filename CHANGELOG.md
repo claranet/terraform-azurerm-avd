@@ -1,3 +1,17 @@
+## 7.6.0 (2024-12-13)
+
+### Features
+
+* add AVD application resource 5990403
+
+### Miscellaneous Chores
+
+* **deps:** update dependency opentofu to v1.8.6 1a686bd
+* **deps:** update dependency tflint to v0.54.0 d49bc16
+* **deps:** update dependency trivy to v0.57.1 d7063ba
+* **deps:** update pre-commit hook alessandrojcm/commitlint-pre-commit-hook to v9.19.0 7102bb2
+* **deps:** update tools 22a4ed8
+
 ## 7.5.1 (2024-11-06)
 
 ### Bug Fixes
