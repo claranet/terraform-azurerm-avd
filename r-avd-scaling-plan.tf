@@ -21,7 +21,7 @@ resource "azurerm_role_assignment" "scaling_role_assignment" {
   skip_service_principal_aad_check = true
 }
 
-resource "azurerm_virtual_desktop_scaling_plan" "scaling_plan" {
+resource "azurerm_virtual_desktop_scaling_plan" "main" {
   count = var.scaling_plan_config.enabled ? 1 : 0
 
   name     = local.avd_scaling_plan_name
@@ -36,7 +36,7 @@ resource "azurerm_virtual_desktop_scaling_plan" "scaling_plan" {
   time_zone     = var.scaling_plan_config.timezone
 
   host_pool {
-    hostpool_id          = azurerm_virtual_desktop_host_pool.host_pool.id
+    hostpool_id          = azurerm_virtual_desktop_host_pool.main.id
     scaling_plan_enabled = var.scaling_plan_config.enabled
   }
 
@@ -69,4 +69,9 @@ resource "azurerm_virtual_desktop_scaling_plan" "scaling_plan" {
   depends_on = [
     azurerm_role_assignment.scaling_role_assignment,
   ]
+}
+
+moved {
+  from = azurerm_virtual_desktop_scaling_plan.scaling_plan
+  to   = azurerm_virtual_desktop_scaling_plan.main
 }

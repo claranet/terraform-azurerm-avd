@@ -1,4 +1,4 @@
-resource "azurerm_virtual_desktop_workspace" "workspace" {
+resource "azurerm_virtual_desktop_workspace" "main" {
   name     = local.avd_workspace_name
   location = var.location
 
@@ -10,4 +10,9 @@ resource "azurerm_virtual_desktop_workspace" "workspace" {
   public_network_access_enabled = var.workspace_config.public_network_access_enabled
 
   tags = merge(local.default_tags, var.workspace_config.extra_tags, var.extra_tags)
+}
+
+moved {
+  from = azurerm_virtual_desktop_workspace.workspace
+  to   = azurerm_virtual_desktop_workspace.main
 }

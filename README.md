@@ -35,36 +35,6 @@ More details about variables set by the `terraform-wrapper` available in the [do
 [Hashicorp Terraform](https://github.com/hashicorp/terraform/). Instead, we recommend to use [OpenTofu](https://github.com/opentofu/opentofu/).
 
 ```hcl
-module "azure_region" {
-  source  = "claranet/regions/azurerm"
-  version = "x.x.x"
-
-  azure_region = var.azure_region
-}
-
-module "rg" {
-  source  = "claranet/rg/azurerm"
-  version = "x.x.x"
-
-  location    = module.azure_region.location
-  client_name = var.client_name
-  environment = var.environment
-  stack       = var.stack
-}
-
-module "run" {
-  source  = "claranet/run/azurerm"
-  version = "x.x.x"
-
-  location       = module.azure_region.location
-  location_short = module.azure_region.location_short
-  client_name    = var.client_name
-  environment    = var.environment
-  stack          = var.stack
-
-  resource_group_name = module.rg.resource_group_name
-}
-
 locals {
   timezone = "Romance Standard Time"
 
@@ -89,7 +59,7 @@ module "avd" {
   environment    = var.environment
   stack          = var.stack
 
-  resource_group_name = module.rg.resource_group_name
+  resource_group_name = module.rg.name
 
   workspace_config = {
     extra_tags = {
@@ -174,19 +144,19 @@ module "avd" {
 
 | Name | Version |
 |------|---------|
-| azuread | >= 2.47 |
+| azuread | ~> 3.0 |
 | azurecaf | ~> 1.2.28 |
-| azurerm | ~> 3.101 |
+| azurerm | ~> 4.0 |
 | time | ~> 0.12 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| diagnostics\_app\_group | claranet/diagnostic-settings/azurerm | ~> 7.0.0 |
-| diagnostics\_host\_pool | claranet/diagnostic-settings/azurerm | ~> 7.0.0 |
-| diagnostics\_scaling\_plan | claranet/diagnostic-settings/azurerm | ~> 7.0.0 |
-| diagnostics\_workspace | claranet/diagnostic-settings/azurerm | ~> 7.0.0 |
+| diagnostics\_app\_group | claranet/diagnostic-settings/azurerm | ~> 8.0.0 |
+| diagnostics\_host\_pool | claranet/diagnostic-settings/azurerm | ~> 8.0.0 |
+| diagnostics\_scaling\_plan | claranet/diagnostic-settings/azurerm | ~> 8.0.0 |
+| diagnostics\_workspace | claranet/diagnostic-settings/azurerm | ~> 8.0.0 |
 
 ## Resources
 
@@ -195,13 +165,13 @@ module "avd" {
 | [azurerm_role_assignment.app_group_role_assignments](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.scaling_role_assignment](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_role_definition.scaling_role_definition](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_definition) | resource |
-| [azurerm_virtual_desktop_application.app](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_application) | resource |
-| [azurerm_virtual_desktop_application_group.app_group](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_application_group) | resource |
-| [azurerm_virtual_desktop_host_pool.host_pool](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_host_pool) | resource |
-| [azurerm_virtual_desktop_host_pool_registration_info.host_pool_registration_info](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_host_pool_registration_info) | resource |
-| [azurerm_virtual_desktop_scaling_plan.scaling_plan](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_scaling_plan) | resource |
-| [azurerm_virtual_desktop_workspace.workspace](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_workspace) | resource |
-| [azurerm_virtual_desktop_workspace_application_group_association.workspace_app_group_association](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_workspace_application_group_association) | resource |
+| [azurerm_virtual_desktop_application.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_application) | resource |
+| [azurerm_virtual_desktop_application_group.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_application_group) | resource |
+| [azurerm_virtual_desktop_host_pool.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_host_pool) | resource |
+| [azurerm_virtual_desktop_host_pool_registration_info.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_host_pool_registration_info) | resource |
+| [azurerm_virtual_desktop_scaling_plan.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_scaling_plan) | resource |
+| [azurerm_virtual_desktop_workspace.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_workspace) | resource |
+| [azurerm_virtual_desktop_workspace_application_group_association.main](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_workspace_application_group_association) | resource |
 | [time_rotating.time](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/rotating) | resource |
 | [azuread_application_published_app_ids.well_known](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/application_published_app_ids) | data source |
 | [azuread_service_principal.avd_service_principal](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/service_principal) | data source |
@@ -220,8 +190,8 @@ module "avd" {
 | application\_group\_custom\_name | Custom Azure Virtual Desktop Application Group name, generated if not set. | `string` | `""` | no |
 | applications\_config | AVD applications configuration. Description of parameters [here](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_application). | <pre>map(object({<br/>    custom_name                  = optional(string)<br/>    friendly_name                = optional(string)<br/>    description                  = optional(string)<br/>    path                         = string<br/>    command_line_argument_policy = optional(string, "DoNotAllow")<br/>    command_line_arguments       = optional(string)<br/>    show_in_portal               = optional(bool)<br/>    icon_path                    = optional(string)<br/>    icon_index                   = optional(string)<br/>  }))</pre> | `{}` | no |
 | client\_name | Client name/account used in naming. | `string` | n/a | yes |
-| custom\_diagnostic\_settings\_name | Custom name of the diagnostics settings, name will be 'default' if not set. | `string` | `"default"` | no |
 | default\_tags\_enabled | Option to enable or disable default tags. | `bool` | `true` | no |
+| diagnostic\_settings\_custom\_name | Custom name of the diagnostics settings, name will be `default` if not set. | `string` | `"default"` | no |
 | environment | Project environment. | `string` | n/a | yes |
 | extra\_tags | Additional tags to add on resources. | `map(string)` | `{}` | no |
 | host\_pool\_config | AVD Host Pool specific configuration. | <pre>object({<br/>    friendly_name                         = optional(string)<br/>    description                           = optional(string)<br/>    validate_environment                  = optional(bool, true)<br/>    custom_rdp_properties                 = optional(string, "drivestoredirect:s:*;audiomode:i:0;videoplaybackmode:i:1;redirectclipboard:i:1;redirectprinters:i:1;devicestoredirect:s:*;redirectcomports:i:1;redirectsmartcards:i:1;usbdevicestoredirect:s:*;enablecredsspsupport:i:1;use multimon:i:1;")<br/>    public_network_access                 = optional(string, "Enabled")<br/>    type                                  = optional(string, "Pooled")<br/>    load_balancer_type                    = optional(string, "BreadthFirst")<br/>    personal_desktop_assignment_type      = optional(string, "Automatic")<br/>    maximum_sessions_allowed              = optional(number, 16)<br/>    preferred_app_group_type              = optional(string)<br/>    start_vm_on_connect                   = optional(bool, false)<br/>    host_registration_expires_in_in_hours = optional(number, 48)<br/>    scheduled_agent_updates = optional(object({<br/>      enabled                   = optional(bool, false)<br/>      timezone                  = optional(string, "UTC") # https://jackstromberg.com/2017/01/list-of-time-zones-consumed-by-azure/<br/>      use_session_host_timezone = optional(bool, false)<br/>      schedules = optional(list(object({<br/>        day_of_week = string<br/>        hour_of_day = number<br/>      })), [])<br/>    }), {})<br/>    extra_tags = optional(map(string))<br/>  })</pre> | `{}` | no |
@@ -229,7 +199,7 @@ module "avd" {
 | location | Azure region to use. | `string` | n/a | yes |
 | location\_short | Short string for Azure location. | `string` | n/a | yes |
 | logs\_categories | Log categories to send to destinations. | `list(string)` | `null` | no |
-| logs\_destinations\_ids | List of destination resources IDs for logs diagnostic destination.<br/>Can be `Storage Account`, `Log Analytics Workspace` and `Event Hub`. No more than one of each can be set.<br/>If you want to specify an Azure EventHub to send logs and metrics to, you need to provide a formated string with both the EventHub Namespace authorization send ID and the EventHub name (name of the queue to use in the Namespace) separated by the `|` character. | `list(string)` | n/a | yes |
+| logs\_destinations\_ids | List of destination resources IDs for logs diagnostic destination.<br/>Can be `Storage Account`, `Log Analytics Workspace` and `Event Hub`. No more than one of each can be set.<br/>If you want to use Azure EventHub as a destination, you must provide a formatted string containing both the EventHub Namespace authorization send ID and the EventHub name (name of the queue to use in the Namespace) separated by the <code>&#124;</code> character. | `list(string)` | n/a | yes |
 | logs\_metrics\_categories | Metrics categories to send to destinations. | `list(string)` | `null` | no |
 | name\_prefix | Optional prefix for the generated name. | `string` | `""` | no |
 | name\_suffix | Optional suffix for the generated name. | `string` | `""` | no |
@@ -244,24 +214,25 @@ module "avd" {
 
 | Name | Description |
 |------|-------------|
-| application\_group | AVD Application Group object output. |
 | application\_group\_id | AVD Application Group ID. |
 | application\_group\_name | AVD Application Group name. |
 | avd\_service\_principal\_client\_id | AVD Service Principal Client ID (Application ID). |
 | avd\_service\_principal\_name | AVD Service Principal name. |
 | avd\_service\_principal\_object\_id | AVD Service Principal Object ID (Principal ID). |
-| host\_pool | AVD Host Pool object output. |
 | host\_pool\_id | AVD Host Pool ID. |
 | host\_pool\_name | AVD Host Pool name. |
 | host\_registration\_token | AVD host registration token. |
 | host\_registration\_token\_expiration\_date | AVD host registration token expiration date. |
-| scaling\_plan | AVD Scaling Plan object output. |
+| resouce\_application | AVD Application resource object. |
+| resource\_application\_group | AVD Application Group resource object. |
+| resource\_host\_pool | AVD Host Pool resource object. |
+| resource\_scaling\_plan | AVD Scaling Plan resource object. |
+| resource\_workspace | AVD Workspace resource object. |
 | scaling\_plan\_id | AVD Scaling Plan ID. |
 | scaling\_plan\_name | AVD Scaling Plan name. |
-| scaling\_plan\_role\_definition | AVD Scaling Plan Role Definition object output. |
+| scaling\_plan\_role\_definition | AVD Scaling Plan Role Definition resource object. |
 | scaling\_plan\_role\_definition\_id | AVD Scaling Plan Role Definition ID. |
 | scaling\_plan\_role\_definition\_name | AVD Scaling Plan Role Definition name. |
-| workspace | AVD Workspace object output. |
 | workspace\_id | AVD Workspace ID. |
 | workspace\_name | AVD Workspace name. |
 <!-- END_TF_DOCS -->
