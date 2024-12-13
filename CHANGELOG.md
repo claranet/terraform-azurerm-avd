@@ -1,3 +1,18 @@
+## 8.0.0 (2024-12-13)
+
+### ⚠ BREAKING CHANGES
+
+* **AZ-1088:** AzureRM Provider v4+ and OpenTofu 1.8+
+
+### Features
+
+* **AZ-1088:** module v8 structure and updates 71d7556
+
+### Miscellaneous Chores
+
+* **deps:** update dependency azuread to v3 f2c3ff1
+* **deps:** update dependency claranet/diagnostic-settings/azurerm to v8 60a9bc5
+
 ## 7.6.0 (2024-12-13)
 
 ### Features
