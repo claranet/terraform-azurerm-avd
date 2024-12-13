@@ -89,6 +89,12 @@ module "avd" {
     )
   }
 
+  applications_config = {
+    app-1 = {
+      path = "C:\\application\\app-1.exe"
+    }
+  }
+
   scaling_plan_config = {
     enabled  = true
     timezone = local.timezone
