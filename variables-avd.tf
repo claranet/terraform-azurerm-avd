@@ -15,7 +15,7 @@ variable "host_pool_config" {
   type = object({
     friendly_name                         = optional(string)
     description                           = optional(string)
-    validate_environment                  = optional(bool, true)
+    validate_environment                  = optional(bool, false)
     custom_rdp_properties                 = optional(string, "drivestoredirect:s:*;audiomode:i:0;videoplaybackmode:i:1;redirectclipboard:i:1;redirectprinters:i:1;devicestoredirect:s:*;redirectcomports:i:1;redirectsmartcards:i:1;usbdevicestoredirect:s:*;enablecredsspsupport:i:1;use multimon:i:1;")
     public_network_access                 = optional(string, "Enabled")
     type                                  = optional(string, "Pooled")
