@@ -1,3 +1,16 @@
+## 8.1.0 (2025-11-07)
+
+### Features
+
+* ✨ update `validate_environment` variable 235acd1
+
+### Miscellaneous Chores
+
+* **deps:** update dependency opentofu to v1.10.7 23a1a68
+* **deps:** update dependency trivy to v0.67.1 2d1a055
+* **deps:** update dependency trivy to v0.67.2 5873451
+* **deps:** update pre-commit hook tofuutils/pre-commit-opentofu to v2.2.2 eef76e2
+
 ## 8.0.1 (2025-09-30)
 
 ### Code Refactoring
