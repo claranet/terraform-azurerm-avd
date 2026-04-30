@@ -143,7 +143,7 @@ module "avd" {
 ## Providers
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | azuread | ~> 3.0 |
 | azurecaf | >= 1.2.28 |
 | azurerm | ~> 4.31 |
@@ -152,7 +152,7 @@ module "avd" {
 ## Modules
 
 | Name | Source | Version |
-|------|--------|---------|
+| ---- | ------ | ------- |
 | diagnostics\_app\_group | claranet/diagnostic-settings/azurerm | ~> 8.2.0 |
 | diagnostics\_host\_pool | claranet/diagnostic-settings/azurerm | ~> 8.2.0 |
 | diagnostics\_scaling\_plan | claranet/diagnostic-settings/azurerm | ~> 8.2.0 |
@@ -161,7 +161,7 @@ module "avd" {
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [azurerm_role_assignment.app_group_role_assignments](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_role_assignment.scaling_role_assignment](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_role_definition.scaling_role_definition](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_definition) | resource |
@@ -185,7 +185,7 @@ module "avd" {
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | application\_group\_config | AVD Application Group specific configuration. | <pre>object({<br/>    friendly_name                = optional(string)<br/>    default_desktop_display_name = optional(string)<br/>    description                  = optional(string)<br/>    type                         = optional(string, "Desktop")<br/>    role_assignments_object_ids  = optional(list(string), [])<br/>    extra_tags                   = optional(map(string))<br/>  })</pre> | `{}` | no |
 | application\_group\_custom\_name | Custom Azure Virtual Desktop Application Group name, generated if not set. | `string` | `""` | no |
 | applications\_config | AVD applications configuration. Description of parameters [here](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_application). | <pre>map(object({<br/>    custom_name                  = optional(string)<br/>    friendly_name                = optional(string)<br/>    description                  = optional(string)<br/>    path                         = string<br/>    command_line_argument_policy = optional(string, "DoNotAllow")<br/>    command_line_arguments       = optional(string)<br/>    show_in_portal               = optional(bool)<br/>    icon_path                    = optional(string)<br/>    icon_index                   = optional(string)<br/>  }))</pre> | `{}` | no |
@@ -213,7 +213,7 @@ module "avd" {
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | application\_group\_id | AVD Application Group ID. |
 | application\_group\_name | AVD Application Group name. |
 | avd\_service\_principal\_client\_id | AVD Service Principal Client ID (Application ID). |
