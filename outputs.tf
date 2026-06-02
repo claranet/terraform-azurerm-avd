@@ -1,6 +1,7 @@
 output "resource_workspace" {
   description = "AVD Workspace resource object."
   value       = azurerm_virtual_desktop_workspace.main
+  sensitive   = true
 }
 
 output "workspace_id" {
@@ -16,6 +17,7 @@ output "workspace_name" {
 output "resource_host_pool" {
   description = "AVD Host Pool resource object."
   value       = azurerm_virtual_desktop_host_pool.main
+  sensitive   = true
 }
 
 output "host_pool_id" {
@@ -42,6 +44,7 @@ output "host_registration_token_expiration_date" {
 output "resource_application_group" {
   description = "AVD Application Group resource object."
   value       = azurerm_virtual_desktop_application_group.main
+  sensitive   = true
 }
 
 output "application_group_id" {
