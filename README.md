@@ -147,7 +147,7 @@ module "avd" {
 | azuread | ~> 3.0 |
 | azurecaf | >= 1.2.28 |
 | azurerm | ~> 4.31 |
-| time | ~> 0.13 |
+| time | ~> 0.14 |
 
 ## Modules
 
