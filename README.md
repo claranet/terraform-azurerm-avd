@@ -146,18 +146,18 @@ module "avd" {
 | Name | Version |
 | ---- | ------- |
 | azuread | ~> 3.0 |
-| azurecaf | >= 1.2.28 |
-| azurerm | ~> 4.31 |
+| azurecaf | ~> 1.3.0 |
+| azurerm | ~> 5.0 |
 | time | ~> 0.14 |
 
 ## Modules
 
 | Name | Source | Version |
 | ---- | ------ | ------- |
-| diagnostics\_app\_group | claranet/diagnostic-settings/azurerm | ~> 8.2.0 |
-| diagnostics\_host\_pool | claranet/diagnostic-settings/azurerm | ~> 8.2.0 |
-| diagnostics\_scaling\_plan | claranet/diagnostic-settings/azurerm | ~> 8.2.0 |
-| diagnostics\_workspace | claranet/diagnostic-settings/azurerm | ~> 8.2.0 |
+| diagnostics\_app\_group | claranet/diagnostic-settings/azurerm | ~> 9.0 |
+| diagnostics\_host\_pool | claranet/diagnostic-settings/azurerm | ~> 9.0 |
+| diagnostics\_scaling\_plan | claranet/diagnostic-settings/azurerm | ~> 9.0 |
+| diagnostics\_workspace | claranet/diagnostic-settings/azurerm | ~> 9.0 |
 
 ## Resources
 
